@@ -1,18 +1,20 @@
-defmodule Excess do
+alias Excess, as: Xs
+
+defmodule Xs do
   @moduledoc """
   Documentation for Excess.
   """
 
-  @doc """
-  Hello world.
+  def from(term) do
+    create(fn
+      {:start, listener} ->
+        listener
+        |> Xs.Listener.next(term)
+        |> Xs.Listener.complete
+      :stop -> :ok
+    end)
+  end
 
-  ## Examples
-
-      iex> Excess.hello
-      :world
-
-  """
-  def hello do
-    :world
+  def create(producer) do
   end
 end

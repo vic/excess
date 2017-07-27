@@ -1,8 +1,7 @@
-defmodule ExcessTest do
-  use ExUnit.Case
-  doctest Excess
+alias Excess, as: Xs
 
-  test "the truth" do
-    assert 1 + 1 == 2
-  end
+defmodule Xs.XsTest do
+
+  use ExUnit.Case
+
 end
