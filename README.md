@@ -1,6 +1,7 @@
-# Excess
+# `alias Excess, as: Xs`
 
-**TODO: Add description**
+![xs](https://user-images.githubusercontent.com/331/28281077-7f0bdf42-6aeb-11e7-8bf1-a59bfa506b31.png)
+
 
 ## Installation
 
