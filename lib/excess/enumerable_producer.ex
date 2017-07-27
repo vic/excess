@@ -1,6 +1,18 @@
 alias Excess, as: Xs
 
 defmodule Xs.Producer.Enum do
+  @moduledoc """
+  A very simple synchronous producer for enumerable collections.
+
+  Once started, this producer emits all values from the enumerable
+  using `Enum.each/2`, that is, lazy streams will be consumed once
+  a listener is added to the producer.
+
+  Everything happens synchronously, `start/2` does not return until
+  all of the enumerable values have been produced and sent to the
+  listener. `stop/1` does nothing.
+  """
+
   defstruct [:enum]
 
   defmacro __using__(_) do
