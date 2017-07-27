@@ -1,12 +1,17 @@
 defmodule Excess.Mixfile do
   use Mix.Project
 
+  @version "0.0.1"
+
   def project do
     [app: :excess,
-     version: "0.1.0",
+     version: @version,
      elixir: "~> 1.4",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     package: package(),
+     source_url: "https://github.com/vic/excess",
+     docs: [source_ref: "v#{@version}", main: "Excess"],
      deps: deps()]
   end
 
@@ -18,6 +23,18 @@ defmodule Excess.Mixfile do
     [extra_applications: [:logger]]
   end
 
+  defp package do
+    [description: "Excess",
+     files: ["lib", "mix.exs", "README*"],
+     maintainers: ["Victor Borja <vborja@apache.org>"],
+     licenses: ["Apache-2"],
+     links: %{github: "https://github.com/vic/excess"}]
+  end
+
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_),     do: ["lib"]
+
+
   # Dependencies can be Hex packages:
   #
   #   {:my_dep, "~> 0.3.0"}
@@ -28,6 +45,8 @@ defmodule Excess.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [
+      {:ex_doc, "~> 0.14", only: :dev},
+    ]
   end
 end
