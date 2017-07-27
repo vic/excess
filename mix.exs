@@ -12,6 +12,7 @@ defmodule Excess.Mixfile do
      package: package(),
      source_url: "https://github.com/vic/excess",
      docs: [source_ref: "v#{@version}", main: "Excess"],
+     elixirc_paths: elixirc_paths(Mix.env),
      deps: deps()]
   end
 

@@ -3,6 +3,7 @@ alias Excess, as: Xs
 defmodule Xs.EnumProducerTest do
 
   use ExUnit.Case
+  use Xs.TestAsserts
 
   describe "Enum producers" do
 
@@ -32,20 +33,6 @@ defmodule Xs.EnumProducerTest do
         fn x -> x end)
       producer = Xs.Producer.Enum.from(stream)
       assert_produced_all(producer, [0, 1, 2])
-    end
-
-    def assert_produced_all(producer, items) do
-      {:ok, agent} = Agent.start_link(fn -> [] end)
-      Xs.Producer.start(producer, fn
-        {:next, event} ->
-          Agent.update(agent, &([event | &1]))
-        {:error, error} -> raise error
-        :complete ->
-          Agent.update(agent, &([:done | &1]))
-      end)
-      produced = Agent.get(agent, &(&1))
-      assert produced == [:done | Enum.reverse(items)]
-      :ok = Agent.stop(agent)
     end
 
   end
