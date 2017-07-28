@@ -40,8 +40,8 @@ end
 
 
 defimpl Xs.PubSub, for: List do
-  defdelegate single?(broadcaster), to: Xs.ListPubSub
-  defdelegate empty?(broadcaster), to: Xs.ListPubSub
+  defdelegate single?(pubsub), to: Xs.ListPubSub
+  defdelegate empty?(pubsub), to: Xs.ListPubSub
 end
 
 defimpl Xs.Subscriber, for: List do

@@ -2,32 +2,32 @@ alias Excess, as: Xs
 
 defmodule Xs.Stream do
 
-  defstruct [:producer, :broadcaster]
+  defstruct [:producer, :pubsub]
 
-  def subscribe(stream = %{producer: producer, broadcaster: broadcaster}, listener) do
-    broadcaster = Xs.Subscriber.subscribe(broadcaster, listener)
-    producer = !Xs.PubSub.single?(broadcaster) &&  producer || Xs.Producer.start(producer, stream)
-    %{stream | producer: producer, broadcaster: broadcaster}
+  def subscribe(stream = %{producer: producer, pubsub: pubsub}, listener) do
+    pubsub = Xs.Subscriber.subscribe(pubsub, listener)
+    producer = !Xs.PubSub.single?(pubsub) &&  producer || Xs.Producer.start(producer, stream)
+    %{stream | producer: producer, pubsub: pubsub}
   end
 
-  def unsubscribe(stream = %{producer: producer, broadcaster: broadcaster}, listener) do
-    broadcaster = Xs.Subscriber.unsubscribe(broadcaster, listener)
-    producer = !Xs.PubSub.empty?(broadcaster) && producer || Xs.Producer.stop(producer)
-    %{stream | producer: producer, broadcaster: broadcaster}
+  def unsubscribe(stream = %{producer: producer, pubsub: pubsub}, listener) do
+    pubsub = Xs.Subscriber.unsubscribe(pubsub, listener)
+    producer = !Xs.PubSub.empty?(pubsub) && producer || Xs.Producer.stop(producer)
+    %{stream | producer: producer, pubsub: pubsub}
   end
 
   def next(stream, value) do
-    Xs.Listener.next(stream.broadcaster, value)
+    Xs.Listener.next(stream.pubsub, value)
     stream
   end
 
   def error(stream, error) do
-    Xs.Listener.error(stream.broadcaster, error)
+    Xs.Listener.error(stream.pubsub, error)
     stream
   end
 
   def complete(stream) do
-    Xs.Listener.complete(stream.broadcaster)
+    Xs.Listener.complete(stream.pubsub)
     stream
   end
 
