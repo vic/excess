@@ -10,15 +10,21 @@ defmodule Xs.TestAsserts do
 
   import ExUnit.Assertions
 
-  def assert_produced_all(producer, items) do
+  def agent_listener do
     {:ok, agent} = Agent.start_link(fn -> [] end)
-    Xs.Producer.start(producer, fn
+    listener = fn
       {:next, event} ->
         Agent.update(agent, &([event | &1]))
       {:error, error} -> raise error
       :complete ->
         Agent.update(agent, &([:done | &1]))
-    end)
+    end
+    {agent, listener}
+  end
+
+  def assert_produced_all(producer, items) do
+    {agent, listener} = agent_listener()
+    Xs.Producer.start(producer, listener)
     produced = Agent.get(agent, &(&1))
     assert produced == [:done | Enum.reverse(items)]
     :ok = Agent.stop(agent)
