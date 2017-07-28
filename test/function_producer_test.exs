@@ -6,8 +6,7 @@ defmodule Xs.FunctionProducerTest do
   use Xs.TestAsserts
 
   describe "Function producer" do
-
-    test "produces list items" do
+    test "start" do
       producer = fn
         {:start, listener} ->
           listener
