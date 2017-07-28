@@ -1,9 +1,9 @@
 alias Excess, as: Xs
 
-defmodule Xs.ListBroadcaster do
+defmodule Xs.ListPubSub do
 
   @moduledoc """
-  Most basic and dumb of broadcasters
+  Most basic and dumb of PubSub
 
   This one just holds a list of listeners.
 
@@ -39,24 +39,24 @@ defmodule Xs.ListBroadcaster do
 end
 
 
-defimpl Xs.Broadcaster, for: List do
-  defdelegate single?(broadcaster), to: Xs.ListBroadcaster
-  defdelegate empty?(broadcaster), to: Xs.ListBroadcaster
+defimpl Xs.PubSub, for: List do
+  defdelegate single?(broadcaster), to: Xs.ListPubSub
+  defdelegate empty?(broadcaster), to: Xs.ListPubSub
 end
 
 defimpl Xs.Subscriber, for: List do
-  defdelegate subscribe(subscriber, listener), to: Xs.ListBroadcaster
-  defdelegate unsubscribe(subscriber, listener), to: Xs.ListBroadcaster
+  defdelegate subscribe(subscriber, listener), to: Xs.ListPubSub
+  defdelegate unsubscribe(subscriber, listener), to: Xs.ListPubSub
 end
 
 defimpl Xs.ShamefullySend, for: List do
-  defdelegate next(stream, value), to: Xs.ListBroadcaster
-  defdelegate error(stream, value), to: Xs.ListBroadcaster
-  defdelegate complete(stream), to: Xs.ListBroadcaster
+  defdelegate next(stream, value), to: Xs.ListPubSub
+  defdelegate error(stream, value), to: Xs.ListPubSub
+  defdelegate complete(stream), to: Xs.ListPubSub
 end
 
 defimpl Xs.Listener, for: List do
-  defdelegate next(stream, value), to: Xs.ListBroadcaster
-  defdelegate error(stream, value), to: Xs.ListBroadcaster
-  defdelegate complete(stream), to: Xs.ListBroadcaster
+  defdelegate next(stream, value), to: Xs.ListPubSub
+  defdelegate error(stream, value), to: Xs.ListPubSub
+  defdelegate complete(stream), to: Xs.ListPubSub
 end
