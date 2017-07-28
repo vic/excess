@@ -42,9 +42,6 @@ end
 defimpl Xs.PubSub, for: List do
   defdelegate single?(pubsub), to: Xs.ListPubSub
   defdelegate empty?(pubsub), to: Xs.ListPubSub
-end
-
-defimpl Xs.Subscriber, for: List do
   defdelegate subscribe(subscriber, listener), to: Xs.ListPubSub
   defdelegate unsubscribe(subscriber, listener), to: Xs.ListPubSub
 end

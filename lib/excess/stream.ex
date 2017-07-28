@@ -5,13 +5,13 @@ defmodule Xs.Stream do
   defstruct [:producer, :pubsub]
 
   def subscribe(stream = %{producer: producer, pubsub: pubsub}, listener) do
-    pubsub = Xs.Subscriber.subscribe(pubsub, listener)
+    pubsub = Xs.PubSub.subscribe(pubsub, listener)
     producer = !Xs.PubSub.single?(pubsub) &&  producer || Xs.Producer.start(producer, stream)
     %{stream | producer: producer, pubsub: pubsub}
   end
 
   def unsubscribe(stream = %{producer: producer, pubsub: pubsub}, listener) do
-    pubsub = Xs.Subscriber.unsubscribe(pubsub, listener)
+    pubsub = Xs.PubSub.unsubscribe(pubsub, listener)
     producer = !Xs.PubSub.empty?(pubsub) && producer || Xs.Producer.stop(producer)
     %{stream | producer: producer, pubsub: pubsub}
   end
